@@ -2,10 +2,10 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
-from src.route import generate_route
-from src.mock_atmosphere import get_mock_profile
-from src.turbulence import shear_to_probability
-from src.visualization import (
+from route import generate_route
+from mock_atmosphere import get_mock_profile
+from turbulence import shear_to_probability
+from visualization import (
     plot_vertical_profile,
     plot_route_probability,
     plot_route_contour
