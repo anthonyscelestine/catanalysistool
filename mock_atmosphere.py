@@ -2,13 +2,18 @@ import numpy as np
 
 def get_mock_profile(lat, lon):
 
-    levels = np.linspace(200, 400, 20)  # pressure levels (hPa)
+    levels = np.linspace(200, 400, 25)
+    altitude = 44330 * (1 - (levels / 1013.25)**0.1903)
 
-    jet = 20 * np.exp(-((levels - 250)**2)/(2*(20**2)))
+    # Jet core shifts slightly with latitude
+    jet_center = 11000 + 500*np.sin(lat/10)
 
-    horizontal_variation = 5 * np.sin(lat/5) * np.cos(lon/5)
+    turbulence_band = np.exp(-((altitude - jet_center)**2)/(2*(800**2)))
 
-    wind_speed = 30 + jet + horizontal_variation
+    # Add longitude variation
+    horizontal_factor = 1 + 0.3*np.cos(lon/10)
+
+    wind_speed = 40 + 30 * turbulence_band * horizontal_factor
 
     shear = np.gradient(wind_speed, levels)
 
